@@ -1,0 +1,49 @@
+.my_show {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  background: url('../img/center_default.jpg') no-repeat center top;
+}
+.my_show__con {
+  float: left;
+  width: 38%;
+  overflow: hidden;
+  margin: 90px 0 0 8%;
+  padding-left: 140px;
+  clear: left;
+  color: #fff;
+}
+.my_show__photo {
+  position: relative;
+  float: left;
+  //margin-left: -20px;
+  margin-right: 20px;
+  width: 116px;
+  height: 116px;
+  border: 2px solid #fff;
+  border-radius: 120px;
+}
+.my_show_img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+}
+.my_show__user {
+  padding: 10px 0 5px;
+}
+.my_show__name {
+  display: inline-block;
+  max-width: 70%;
+  width: auto;
+  font-size: 24px;
+  text-shadow: 0 1px 1px #000;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.my_show__info {
+  padding: 3px 0;
+  font-size: 14px;
+}
+
