@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
@@ -5,6 +6,8 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './App.jsx'
 import store from './store.js'
+import  'core-js/es/map';
+import  'core-js/es/set';
 
 ReactDOM.render(<Provider store={store}>
     <App/>

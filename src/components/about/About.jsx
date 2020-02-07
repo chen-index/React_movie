@@ -8,8 +8,8 @@ export default class About extends React.Component {
 
   render() {
     return (
-      <div>
-        About
+      <div style={{height:'100%'}}>
+        <img src={require('../../img/ec24565b5db616984639e4eca8b0ad4f.jpg')} alt=""/>
       </div>
     )
   }

@@ -1,19 +1,17 @@
 import React from 'react';
-import {Layout, Menu, Icon, Spin, Alert} from 'antd';
+import {Layout, Menu, Icon, Spin, Alert, Input, Tag, Tooltip } from 'antd';
 import {Link, Route, Switch} from 'react-router-dom'
 import Accompaniment from './accompaniment/accompaniment.jsx'
 import Works from './works/works.jsx'
 import Album from './album/album.jsx'
-
-import { loadPostsAction } from '../../actions/get_musics_actions.js'
+// import PropTypes from 'prop-types'
 
 import fetchJSONP from 'fetch-jsonp'
 
 import styles from '../../css/home.module.scss'
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
-
+const {  Content } = Layout;
+const { Search } = Input;
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -26,10 +24,21 @@ export default class Home extends React.Component {
       total: 0,
       isloading: true,
       movieType: props.match.params.type,
-      time: Date.now()
+      time: Date.now(),
+      search: 'https://kg.qq.com/node/personal?uid=669f9f8320283283',
+      searchuid: ''
     }
     // this.state = store.getState();
   }
+
+  // static childContextTypes = {
+  //   search: PropTypes.string
+  // }
+  // getChildContext() {
+  //   return {
+  //     search: this.state.search
+  //   }
+  // }
 
   componentWillMount() {
     // this.props.dispatch(loadPostsAction)
@@ -38,20 +47,23 @@ export default class Home extends React.Component {
 
   getMusicList = async () => {
     // const start = this.state.pageSize*(this.state.nowPage-1)
+    const searchurl = this.state.search
+    const str = searchurl.split('=')
+    // const url = `http://node.kg.qq.com/cgi/fcgi-bin/kg_ugc_get_homepage?type=get_uinfo&start=1&num=8&share_uid=669f9f8320283283`
+    const url = `http://node.kg.qq.com/cgi/fcgi-bin/kg_ugc_get_homepage?type=get_uinfo&start=1&num=8&share_uid=${str[1]}`
 
-    const url = `http://node.kg.qq.com/cgi/fcgi-bin/kg_ugc_get_homepage?type=get_uinfo&start=1&num=8&share_uid=669f9f8320283283`
-
-      let promise = await fetchJSONP(url, {
+    let promise = await fetchJSONP(url, {
           jsonpCallbackFunction: 'MusicJsonCallback'
         })
       ;
       let dataS = promise.json();
       dataS.then(data => {
-        console.log(data);
+        // console.log(data);
         this.setState({
           musics: data.data,
           total: data.ugc_total_count,
-          isloading: false
+          isloading: false,
+          searchuid: str[1]
         })
       })
     // fetchJSONP(url)
@@ -64,6 +76,30 @@ export default class Home extends React.Component {
     //       total: data.total
     //     })
     //   })
+    this.props.history.push('/home/works/1/'+ str[1])
+  }
+
+  getSearchMusic = async () => {
+    const hash = window.location.hash.split('/')
+    console.log(hash[4])
+
+    const url = `http://node.kg.qq.com/cgi/fcgi-bin/kg_ugc_get_homepage?type=get_uinfo&start=1&num=8&share_uid=${hash[4]}`
+
+    let promise = await fetchJSONP(url, {
+        jsonpCallbackFunction: 'MusicJsonCallback'
+      })
+    ;
+    let dataS = promise.json();
+    dataS.then(data => {
+      // console.log(data);
+      this.setState({
+        musics: data.data,
+        total: data.ugc_total_count,
+        isloading: false,
+      })
+    })
+    // this.props.history.push('/home/works/1/'+ str[1])
+    console.log(this.state)
   }
 
   render() {
@@ -93,8 +129,28 @@ export default class Home extends React.Component {
       return <Layout>
         <Content style={{backgroundColor:'white'}}>
           <div style={{backgroundColor:'#eee'}}>
-            <div style={{textAlign:'center'}}>
+            <div style={{display:"flex",justifyContent:'space-around'}}>
               <img style={{}} src={require('../../img/logo_seo.png')} alt=""/>
+              <div style={{display:"flex",alignItems:'center'}}>
+                <Search
+                  placeholder="输入k歌主页地址"
+                  onSearch={this.getMusicList}
+                  style={{ width: 200 }}
+                  onChange={(e) => this.Input(e)}
+                />
+              </div>
+              <div style={{display:"flex",alignItems:'center'}}>
+                <Tag color="#f50">特别推荐地址</Tag>
+                <Tooltip placement="top" title={'https://kg.qq.com/node/personal?uid=639c948d272836823d'}>
+                  <Tag color="magenta" onClick={this.verai} value={'sss'}>verai</Tag>
+                </Tooltip>
+                {/*<Tooltip placement="top" title={'ssss'}>*/}
+                {/*  <Tag color="cyan" onClick={this.me}>*/}
+                {/*    <img src={require('../../img/e400109@2x.gif')} style={{width:24,height:24}} alt=""/>*/}
+                {/*  </Tag>*/}
+                {/*</Tooltip>*/}
+
+              </div>
             </div>
           </div>
           <div className={styles.my_show}>
@@ -104,7 +160,8 @@ export default class Home extends React.Component {
               </div>
               <div className={styles.my_show__user}>
               <span className={styles.my_show__name}>
-                <img src={require('../../img/e400109@2x.gif')} style={{width:24,height:24}} alt=""/>
+                {this.state.musics.nickname}
+                {/*<img src= style={{width:24,height:24}} alt=""/>*/}
               </span>
                 <span>LV{this.state.musics.level}</span>
               </div>
@@ -121,7 +178,7 @@ export default class Home extends React.Component {
           <div style={{width:'100%'}}>
             <Menu style={{display:"flex",justifyContent:'space-around'}} selectedKeys={['works']} mode="horizontal">
               <Menu.Item key="works">
-                <Link to='/home/works/1'>作品</Link>
+                <Link to={'/home/works/1/' + this.state.searchuid}>作品</Link>
               </Menu.Item>
               <Menu.Item key="album" disabled>
                 <Link to='/home/album/1'>专辑</Link>
@@ -133,7 +190,8 @@ export default class Home extends React.Component {
           </div>
 
           <Switch>
-            <Route path='/home/works/:page' component={Works}></Route>
+            {/*<Route path='/home/works/:page' component={Works}></Route>*/}
+            <Route path='/home/works/:page/:uid' component={Works}></Route>
             <Route path='/home/album/:page' component={Album}></Route>
             <Route path='/home/accompaniment/:page' component={Accompaniment}></Route>
           </Switch>
@@ -146,7 +204,25 @@ export default class Home extends React.Component {
 
     }
   }
+
+  Input(e) {
+    e.persist()
+    // const value = e.target.value
+    this.setState({
+      search: e.target.value
+    })
+  }
+
+  // me = () => {
+  //   // this.props.history.push('/home/works/1/669f9f8320283283')
+  //
+  // }
+  // verai = (e) => {
+  //   console.log(e)
+  //   // this.props.history.push('/home/works/1/639c948d272836823d')
+  // }
 }
+
 // const mapStateToProps = (state, ownProps) => {
 //   return {
 //     post: state.post

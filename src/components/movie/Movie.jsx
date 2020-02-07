@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu } from 'antd';
 
 import {Link, Route, Switch} from 'react-router-dom'
 import MovieList from './MovieList.jsx'
 import MovieDetail from './MovieDetail.jsx'
 
-const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export default class Movie extends React.Component {
   constructor(props) {

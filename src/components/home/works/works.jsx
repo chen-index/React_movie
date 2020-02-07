@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import fetchJSONP from "fetch-jsonp";
 import WorkItem from "./workitem";
 import {Pagination} from "antd";
+import PropTypes from 'prop-types'
 
 class Works extends Component {
   constructor(props) {
@@ -10,31 +11,34 @@ class Works extends Component {
       musics: [],
       total: 0,
       isloading: false,
-      nowpage:parseInt(props.match.params.page) || 1,
+      nowPage:parseInt(props.match.params.page) || 1,
       pageSize:8
     }
   }
 
+  static contextTypes ={
+    search: PropTypes.string
+  }
+
   componentWillMount() {
     this.getMusicList()
-    console.log(this.props.match.params)
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log(nextProps.match)
     this.setState({
       isloading: true,
       nowPage: parseInt(nextProps.match.params.page) || 1,
-      total: 0
+      // total: 0
     },function () {
       this.getMusicList()
     })
   }
 
   getMusicList = async () => {
+    const uid =  this.props.match.params.uid
     const start = this.state.nowPage || 1
 
-    const url = `http://node.kg.qq.com/cgi/fcgi-bin/kg_ugc_get_homepage?type=get_uinfo&start=${start}&num=8&share_uid=669f9f8320283283`
+    const url = `http://node.kg.qq.com/cgi/fcgi-bin/kg_ugc_get_homepage?type=get_uinfo&start=${start}&num=8&share_uid=${uid}`
 
     let promise = await fetchJSONP(url, {
         jsonpCallbackFunction: 'MusicJsonCallback'
@@ -62,7 +66,10 @@ class Works extends Component {
   }
 
   render() {
-    // console.log(this.state.musics)
+    // const uid = this.props.match.params.uid
+    // const params = this.props.match.params
+    // console.log(uid)
+    // console.log(params)
     return (
       <div>
         {this.renderList()}
@@ -78,14 +85,14 @@ class Works extends Component {
         })}
       </div>
       {/*分页*/}
-      <Pagination style={{display:"inline-block",margin:'70px 0',marginLeft:'35%'}} onChange={this.pageChanged} defaultCurrent={this.state.nowPage} pageSize={this.state.pageSize} total={this.state.total} />
+      <Pagination style={{display:"inline-block",margin:'70px 0',marginLeft:'35%'}} onChange={this.pageChanged} current={this.state.nowPage} pageSize={this.state.pageSize} total={this.state.total} />
     </div>
   }
 
   // 页码改变加载新数据
   pageChanged = (page) => {
     // window.location.href = '/#/movie/'+ this.state.movieType + '/' + page
-    this.props.history.push('/home/works/' + page)
+    this.props.history.push('/home/works/' + page + '/' + this.props.match.params.uid)
   }
 }
 

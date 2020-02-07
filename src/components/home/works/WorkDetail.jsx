@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import styles from '../../../css/workdetail.module.scss'
 import fetchJSONP from "fetch-jsonp";
-import MovieItem from "../../movie/MovieItem";
 
 class WorkDetail extends Component {
   constructor(props) {
@@ -21,7 +20,7 @@ class WorkDetail extends Component {
 
   getMusicList = async () => {
     const id = this.props.match.params.id
-    console.log(this.props.match)
+    // console.log(this.props.match)
     const url = `http://cgi.kg.qq.com/fcgi-bin/kg_ugc_getdetail?inCharset=GB2312&outCharset=utf-8&v=4&shareid=${id}`
 
     let promise = await fetchJSONP(url, {
@@ -30,7 +29,7 @@ class WorkDetail extends Component {
     ;
     let dataS = promise.json();
     dataS.then(data => {
-      console.log(data);
+      // console.log(data);
       this.setState({
         music: data.data,
         isloading: false,
@@ -62,13 +61,13 @@ class WorkDetail extends Component {
           <div className={styles.singer_show}>
             <div className={styles.singer_con}>
               <div className={styles.singer_person}>
-                <a className={styles.singer_img}>
+                <span className={styles.singer_img}>
                   <img src={this.state.music.avatar} alt=""/>
-                </a>
+                </span>
                 <div className={styles.singer_user}>
-                  <a className={styles.singer_user__name}>
+                  <span className={styles.singer_user__name}>
                     <img src={require('../../../img/e400109@2x.gif')} style={{width:'16px',height:'16px'}} alt=""/>
-                  </a>
+                  </span>
                   <p className={styles.singer_user__info}>
                     收听{this.state.music.play_num} 评论{this.state.music.total} 得分{this.state.music.score}
                   </p>
@@ -94,9 +93,9 @@ class WorkDetail extends Component {
               <ul className={styles.play_rank__list} key={this.state.lwb.uid}>
                 {this.state.lwb.map(item => {
                   return <li key={item.uid} className={styles.play_rank__item}>
-                    <a className={styles.play_rank__img}>
+                    <span className={styles.play_rank__img}>
                       <img className={styles.lazyload_img} src={item.avatar} alt=""/>
-                    </a>
+                    </span>
                     <p className={styles.play_rank__count}>{item.num}{item.type === 0 ? 'K币' : '鲜花'}</p>
                   </li>
                 })}
@@ -112,14 +111,14 @@ class WorkDetail extends Component {
               </h2>
             </div>
             <div className={styles.mod_comment__show}>
-              <ul className={styles.mod_comment__list} key={this.state.comments.uid}>
+              <ul className={styles.mod_comment__list} key={this.state.comments.comment_id}>
                 {this.state.comments.map(item => {
-                  return <li key={item.uid} className={styles.mod_comment__item}>
-                    <a className={styles.mod_comment__img}>
+                  return <li key={item.comment_id} className={styles.mod_comment__item}>
+                    <span className={styles.mod_comment__img}>
                       <img className={styles.lazyload_img} src={item.avatar} alt=""/>
-                    </a>
+                    </span>
                     <div className={styles.mod_comment__con}>
-                      <a className={styles.mod_comment__name}>{item.nick}</a>
+                      <span className={styles.mod_comment__name}>{item.nick}</span>
                       <span className={styles.mod_comment__time}>{item.ctime}</span>
                       <p className={styles.mod_comment__info}>{item.content}</p>
                     </div>
