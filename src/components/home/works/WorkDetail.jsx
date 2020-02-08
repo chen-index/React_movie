@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import styles from '../../../css/workdetail.module.scss'
 import fetchJSONP from "fetch-jsonp";
+import {Button, Icon} from "antd";
 
 class WorkDetail extends Component {
   constructor(props) {
@@ -42,6 +43,10 @@ class WorkDetail extends Component {
   render() {
     return (
       <div>
+        <Button style={{marginTop:10}} type="info" onClick={this.goBack}>
+          <Icon type="left" />
+          返回主页
+        </Button>
         <div className={styles.mod_content}>
           {/*  用户作品*/}
           <h2 className={styles.play_name}>{this.state.music.song_name}</h2>
@@ -52,9 +57,15 @@ class WorkDetail extends Component {
               </div>
             </div>
           </div>
-          <audio controls
-                 src={`https://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=${this.props.match.params.id}`}
-                 preload={'none'}></audio>
+          <audio
+            autoPlay
+            loop
+            style={{marginTop:'20px'}}
+            controls
+            src={`https://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=${this.props.match.params.id}`}
+            preload={'none'}>
+            您的浏览器不支持播放。
+          </audio>
         </div>
         <div className={styles.mod_sidebar}>
           {/*  用户信息*/}
@@ -130,6 +141,10 @@ class WorkDetail extends Component {
         </div>
       </div>
     );
+  }
+
+  goBack = () => {
+    this.props.history.go(-1)
   }
 }
 

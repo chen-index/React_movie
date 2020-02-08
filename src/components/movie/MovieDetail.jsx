@@ -15,7 +15,7 @@ export default class MovieDetail extends React.Component {
 
   componentWillMount() {
     const id = this.props.match.params.id
-    console.log(id)
+    // console.log(id)
 
     fetchJSONP('http://api.douban.com/v2/movie/subject/' + id + '?apikey=0df993c66c0c636e29ecbb5344252a4a')
       .then(res => res.json())

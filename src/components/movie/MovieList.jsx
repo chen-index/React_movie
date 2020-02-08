@@ -37,7 +37,7 @@ export default class MovieList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log(nextProps.match)
+    // console.log(nextProps.match)
     this.setState({
       isloading: true,
       nowPage: parseInt(nextProps.match.params.page) || 1,
@@ -69,7 +69,7 @@ export default class MovieList extends React.Component {
     fetchJSONP(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         this.setState({
           isloading: false,
           movies: data.subjects,

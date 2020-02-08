@@ -129,27 +129,28 @@ export default class Home extends React.Component {
       return <Layout>
         <Content style={{backgroundColor:'white'}}>
           <div style={{backgroundColor:'#eee'}}>
-            <div style={{display:"flex",justifyContent:'space-around'}}>
-              <img style={{}} src={require('../../img/logo_seo.png')} alt=""/>
-              <div style={{display:"flex",alignItems:'center'}}>
+            <div className={styles.kgetitle}>
+              <div>
+                <img style={{}} src={require('../../img/logo_seo.png')} alt=""/>
+              </div>
+              <div className={styles.inputbox}>
                 <Search
                   placeholder="输入k歌主页地址"
                   onSearch={this.getMusicList}
-                  style={{ width: 200 }}
+                  className={styles.search}
                   onChange={(e) => this.Input(e)}
                 />
-              </div>
-              <div style={{display:"flex",alignItems:'center'}}>
-                <Tag color="#f50">特别推荐地址</Tag>
-                <Tooltip placement="top" title={'https://kg.qq.com/node/personal?uid=639c948d272836823d'}>
-                  <Tag color="magenta" onClick={this.verai} value={'sss'}>verai</Tag>
-                </Tooltip>
-                {/*<Tooltip placement="top" title={'ssss'}>*/}
-                {/*  <Tag color="cyan" onClick={this.me}>*/}
-                {/*    <img src={require('../../img/e400109@2x.gif')} style={{width:24,height:24}} alt=""/>*/}
-                {/*  </Tag>*/}
-                {/*</Tooltip>*/}
-
+                <div className={styles.tbtjbox}>
+                  <Tag color="#f50">特别推荐地址</Tag>
+                  <Tooltip trigger="click" placement="top" title={'https://kg.qq.com/node/personal?uid=639c948d272836823d'}>
+                    <Tag color="magenta" onClick={this.verai} value={'sss'}>verai</Tag>
+                  </Tooltip>
+                  {/*<Tooltip placement="top" title={'ssss'}>*/}
+                  {/*  <Tag color="cyan" onClick={this.me}>*/}
+                  {/*    <img src={require('../../img/e400109@2x.gif')} style={{width:24,height:24}} alt=""/>*/}
+                  {/*  </Tag>*/}
+                  {/*</Tooltip>*/}
+                </div>
               </div>
             </div>
           </div>
@@ -159,11 +160,11 @@ export default class Home extends React.Component {
                 <img className={styles.my_show_img} src={this.state.musics.head_img_url} alt=""/>
               </div>
               <div className={styles.my_show__user}>
-              <span className={styles.my_show__name}>
+                <span className={styles.my_show__name}>
                 {this.state.musics.nickname}
                 {/*<img src= style={{width:24,height:24}} alt=""/>*/}
-              </span>
-                <span>LV{this.state.musics.level}</span>
+                </span>
+                <span className={styles.my_show__dj}>LV{this.state.musics.level}</span>
               </div>
               <div className={styles.my_show__info}>
                 <span style={{marginRight:10}}>{this.state.musics.levelname}</span>

@@ -1,0 +1,16 @@
+@media screen and (max-width: 800px) {
+  .menujs {
+    display: block!important;
+  }
+  .sider {
+    height: 100%;
+    display: none!important;
+  }
+}
+.menujs {
+  display: none;
+  margin-bottom: 10px;
+}
+.sider {
+  height: 100%;
+}

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import styles from '../../../css/workitem.module.scss'
+
 class Workitem extends Component {
   constructor(props) {
     super(props);
@@ -8,16 +10,21 @@ class Workitem extends Component {
 
   render() {
     return (
-      <div style={{textAlign: 'center',width:'25%'}} onClick={this.goDetail}>
-        <img src={this.props.avatar} alt="" style={{width: 215, height: 215,cursor:'pointer'}}/>
-        <div style={{paddingTop: 10}}>
-          <p style={{fontSize: 12, margin: 0, padding: '5px 0'}}>
-            <span style={{color: 'black'}}>
-              <span style={{fontSize: '16px', lineHeight: '16px'}}>{this.props.title}</span>
+      <div className={styles.container} onClick={this.goDetail}>
+        <div className={styles.content_imgbox}>
+          <img src={this.props.avatar} alt="" className={styles.img_avatar}/>
+          <div className={styles.bf}>
+            <img src={require('../../../img/u=3721795396,687977588&fm=26&gp=0.jpg')} alt=""/>
+          </div>
+        </div>
+        <div className={styles.content}>
+          <p className={styles.content_title}>
+            <span className={styles.content_title_span_box}>
+              <span className={styles.content_title_span_box_content}>{this.props.title}</span>
             </span>
           </p>
-          <span>评论：<span style={{fontSize: 14, marginRight: 10}}>{this.props.coment_count}</span></span>
-          <span>收听：<span>{this.props.gift_count}</span></span>
+          <span className={styles.comment}>评论：<span>{this.props.coment_count}</span></span>
+          <span className={styles.comment}>收听：<span>{this.props.gift_count}</span></span>
         </div>
       </div>
     );

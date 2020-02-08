@@ -25,6 +25,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 
+
 const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
@@ -107,6 +108,12 @@ module.exports = function(webpackEnv) {
               },
               stage: 3,
             }),
+            require('postcss-pxtorem')({
+              rootValue: 100,
+              propWhiteList: [],
+              minPixelValue:2,
+            }),
+
             // Adds PostCSS Normalize as the reset css with default options,
             // so that it honors browserslist config in package.json
             // which in turn let's users customize the target behavior as per their needs.

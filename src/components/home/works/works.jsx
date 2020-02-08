@@ -4,6 +4,8 @@ import WorkItem from "./workitem";
 import {Pagination} from "antd";
 import PropTypes from 'prop-types'
 
+import styles from '../../../css/works.module.scss'
+
 class Works extends Component {
   constructor(props) {
     super(props);
@@ -85,7 +87,7 @@ class Works extends Component {
         })}
       </div>
       {/*分页*/}
-      <Pagination style={{display:"inline-block",margin:'70px 0',marginLeft:'35%'}} onChange={this.pageChanged} current={this.state.nowPage} pageSize={this.state.pageSize} total={this.state.total} />
+      <Pagination className={styles.pagination} onChange={this.pageChanged} current={this.state.nowPage} pageSize={this.state.pageSize} total={this.state.total} />
     </div>
   }
 

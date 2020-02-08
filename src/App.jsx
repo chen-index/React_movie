@@ -1,5 +1,6 @@
 import React from 'react'
 import {HashRouter, Link, Route} from 'react-router-dom'
+// import './App.css'
 
 // import styles from './css/app.module.scss'
 
@@ -26,6 +27,7 @@ export default class App extends React.Component {
         // console.log(window.location)
         return <HashRouter>
             <Layout className="layout" style={{height: '100%'}}>
+                {/*<div className='App'>111</div>*/}
                 <Header style={{height:'30px'}}>
                     {/*<div className={styles.logo}/>*/}
                     <Menu

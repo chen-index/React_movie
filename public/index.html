@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000" />
     <meta name="referrer" content="no-referrer" />
     <meta
@@ -26,6 +26,32 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>k歌&豆瓣电影</title>
+    <script>
+      !function (window) {
+        /* 设计图文档宽度 */
+        var docWidth = 750;
+        var doc = window.document,
+          docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+        var recalc = (function refreshRem () {
+          var clientWidth = docEl.getBoundingClientRect().width;
+          /* 8.55：小于320px不再缩小，11.2：大于420px不再放大 */
+          docEl.style.fontSize = Math.max(Math.min(20 * (clientWidth / docWidth), 11.2), 8.55) * 5 + 'px';
+          return refreshRem;
+        })();
+        /* 添加倍屏标识，安卓为1 */
+        docEl.setAttribute('data-dpr', window.navigator.appVersion.match(/iphone/gi) ? window.devicePixelRatio : 1);
+        if (/iP(hone|od|ad)/.test(window.navigator.userAgent)) {
+          /* 添加IOS标识 */
+          doc.documentElement.classList.add('ios');
+          if (parseInt(window.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1], 10) >= 8)
+            doc.documentElement.classList.add('hairline');
+        }
+        if (!doc.addEventListener) return;
+        window.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+      }(window);
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -40,5 +66,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      window.onload = function () {
+        window.viewportUnitsBuggyfill.init({
+          hacks: window.viewportUnitsBuggyfillHacks
+        });
+      }
+    </script>
   </body>
 </html>
